@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .wrapper {
+            height: 70%;
+            width: 95%;
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            
+        }
+
+        
+
+        .searchcontainer {
+            margin-bottom: 40px;
+            height: 10%;
+            width: 90%;
+            /* border: 2px solid red; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #Searchimages {
+            height: 60%;
+            width: 40%;
+
+            font-weight:bold;
+            font-size: 100%;
+            text-align: center;
+            border-top-left-radius: 50px;
+            border-bottom-left-radius: 50px;
+        }
+
+        #search {
+            height: 60%;
+            width: 10%;
+            margin-left: 2%;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 100%;
+            background-color: rgb(0, 238, 255);
+        }
+
+        #search:hover {
+            background-color: rgb(0, 200, 255);
+            cursor: pointer;
+        }
+
+        img:hover {
+            cursor: pointer;
+            transform: scale(1.05);
+            transition: 0.3s ease;
+            box-shadow: 0 4px 8px black
+        }
+        .container{
+            height:35%;
+            width:25%;
+            margin-top: 10px;
+            padding:10px;
+
+        }
+
+        @media (max-width: 575px) {
+    #search{
+        
+        width: 19%;
+    }
+    .container{
+        width:50%;
+    }
+    
+    
+}
+    </style>
+</head>
+
+<body>
+    <div class="searchcontainer">
+        <input type="text" id="Searchimages" placeholder="Search Images">
+        <button id="search">Search</button>
+    </div>
+    <div class="wrapper">
+        <!-- <div class="container"></div>
+        <div class="container"></div>
+        <div class="container"></div> -->
+    </div>
+</body>
+<script>
+    let myimages = ['flower.jpg', 'women.jpg', 'women.jpg', 'women.jpg', 'women.jpg'];
+    //    *******By using only array**********
+    //    let getimage=myimages.filter((image)=> image === "women.jpg" || image === 'flower.jpg');
+    //    let getcontainer=document.querySelectorAll('.container');
+    //    let getwrapper=document.querySelector('.wrapper')
+    //    getimage.forEach((image,index)=>{
+    //     if(index < getcontainer.length){
+    //         let creatimg=document.createElement('img')
+    //        creatimg.src=image;
+    //        creatimg.style.height="100%";
+    //        creatimg.style.width="100%";
+    //        creatimg.style.objectFit="cover";
+    //        getcontainer[index].appendChild(creatimg);
+    //     }else{
+    //         let creatcont=document.createElement('div');
+    //         creatcont.style.height="35%";
+    //         creatcont.style.width="30%";
+    //         creatcont.style.marginTop="10px";
+    //         getwrapper.appendChild(creatcont)
+
+    //         let creatimg=document.createElement('img')
+    //        creatimg.src=image;
+    //        creatimg.style.height="100%";
+    //        creatimg.style.width="100%";
+    //        creatimg.style.objectFit="cover";
+    //        creatcont.appendChild(creatimg);
+    //      }
+    // })
+    // *******Searching IMages using user inputs
+
+
+    // document.getElementById('search').addEventListener('click', () => {
+    //     let value = document.getElementById('Searchimages').value;
+    //     let getvalue = value + ".jpg";
+    //     let getwrapper = document.querySelector('.wrapper')
+    //     getwrapper.innerHTML = "";
+
+    //     myimages.forEach((image, index) => {
+    //         if (image === getvalue) {
+    //             let creatcont = document.createElement('div');
+    //             creatcont.style.height = "35%";
+    //             creatcont.style.width = "25%";
+    //             creatcont.style.marginTop = "10px";
+    //             creatcont.style.padding = "10px";
+    //             getwrapper.appendChild(creatcont)
+
+    //             let creatimg = document.createElement('img')
+    //             creatimg.src = image;
+    //             creatimg.style.height = "100%";
+    //             creatimg.style.width = "100%";
+    //             creatimg.style.objectFit = "cover";
+    //             creatimg.style.borderRadius = "7px";
+    //             creatcont.appendChild(creatimg);
+    //             document.getElementById('Searchimages').value = "";
+    //         }
+    //     })
+    // })
+
+
+
+
+// Using UNSPLASH API ****************************************
+let accesskey='hD_F88AC_eYVIaykIch7vcX4PEIr5lLH3WDHtKBia5A';
+let geturl='https://api.unsplash.com/photos/random';
+let getwrapper = document.querySelector('.wrapper')
+ document.getElementById('search').addEventListener('click', () => {
+    let value=document.getElementById('Searchimages').value;
+    if(value===""){
+        alert('Plzz enter something')
+        return;
+    }
+
+    fetch(`${geturl}?query=${value}&count=28&client_id=${accesskey}`)
+ .then((response)=>{
+return response.json()
+ })
+ .then((data)=>{
+    getwrapper.innerHTML="";
+
+    data.forEach((images)=>{
+     let imageurl=images.urls.regular;
+
+     let creatcont = document.createElement('div');
+                // creatcont.style.height = "35%";
+                // creatcont.style.width = "25%";
+                // creatcont.style.marginTop = "10px";
+                // creatcont.style.padding = "10px";
+                creatcont.className='container'
+                getwrapper.appendChild(creatcont)
+
+                let creatimg = document.createElement('img')
+                creatimg.src = imageurl;
+                creatimg.style.height = "100%";
+                creatimg.style.width = "100%";
+                creatimg.style.objectFit = "cover";
+                creatimg.style.borderRadius = "7px";
+                creatcont.appendChild(creatimg);
+                document.getElementById('Searchimages').value = "";
+        
+    })
+
+ })
+
+
+})
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // let container = document.querySelectorAll('.container');
+    // myimages.forEach((images, index) => {
+    //     if (index < container.length) {
+    //         let createimg = document.createElement('img');
+    //         createimg.src = images;
+    //         createimg.style.height = "100%";
+    //         createimg.style.width = "100%";
+    //         container[index].appendChild(createimg);
+    //     }else{
+    //         let getwrapper=document.querySelector('.wrapper');
+    //         let createcont=document.createElement('div');
+    //         createcont.style.height="35%";
+    //         createcont.style.width="30%";
+    //         createcont.style.marginTop="10px";
+    //         getwrapper.appendChild(createcont);
+
+    //         let createimg=document.createElement('img');
+    //             createimg.src=images;
+    //             createimg.style.height = "100%";
+    //             createimg.style.width = "100%";
+    //             createcont.appendChild(createimg);
+    //     }
+    // })
+</script>
+
+</html>
