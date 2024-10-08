@@ -28,10 +28,10 @@
             display: flex;
             justify-content: space-evenly;
             flex-wrap: wrap;
-            
+
         }
 
-        
+
 
         .searchcontainer {
             margin-bottom: 40px;
@@ -47,7 +47,7 @@
             height: 60%;
             width: 40%;
 
-            font-weight:bold;
+            font-weight: bold;
             font-size: 100%;
             text-align: center;
             border-top-left-radius: 50px;
@@ -75,25 +75,26 @@
             transition: 0.3s ease;
             box-shadow: 0 4px 8px black
         }
-        .container{
-            height:35%;
-            width:25%;
-            margin-top: 10px;
-            padding:10px;
 
+        .container {
+            height: 35%;
+            width: 25%;
+            margin-top: 10px;
+            padding: 10px;
         }
 
         @media (max-width: 575px) {
-    #search{
-        
-        width: 19%;
-    }
-    .container{
-        width:50%;
-    }
-    
-    
-}
+            #search {
+
+                width: 19%;
+            }
+
+            .container {
+                width: 50%;
+            }
+
+
+        }
     </style>
 </head>
 
@@ -170,70 +171,70 @@
 
 
 
-// Using UNSPLASH API ****************************************
-let accesskey='hD_F88AC_eYVIaykIch7vcX4PEIr5lLH3WDHtKBia5A';
-let geturl='https://api.unsplash.com/photos/random';
-let getwrapper = document.querySelector('.wrapper')
- document.getElementById('search').addEventListener('click', () => {
-    let value=document.getElementById('Searchimages').value;
-    if(value===""){
-        alert('Plzz enter something')
-        return;
-    }
+    // Using UNSPLASH API ****************************************
+    let accesskey = 'hD_F88AC_eYVIaykIch7vcX4PEIr5lLH3WDHtKBia5A';
+    let geturl = 'https://api.unsplash.com/photos/random';
+    let getwrapper = document.querySelector('.wrapper')
+    document.getElementById('search').addEventListener('click', () => {
+        let value = document.getElementById('Searchimages').value;
+        if (value === "") {
+            alert('Plzz enter something')
+            return;
+        }
 
-    fetch(`${geturl}?query=${value}&count=28&client_id=${accesskey}`)
- .then((response)=>{
-return response.json()
- })
- .then((data)=>{
-    getwrapper.innerHTML="";
+        fetch(`${geturl}?query=${value}&count=28&client_id=${accesskey}`)
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                getwrapper.innerHTML = "";
 
-    data.forEach((images)=>{
-     let imageurl=images.urls.regular;
+                data.forEach((images) => {
+                    let imageurl = images.urls.regular;
 
-     let creatcont = document.createElement('div');
-                // creatcont.style.height = "35%";
-                // creatcont.style.width = "25%";
-                // creatcont.style.marginTop = "10px";
-                // creatcont.style.padding = "10px";
-                creatcont.className='container'
-                getwrapper.appendChild(creatcont)
+                    let creatcont = document.createElement('div');
+                    // creatcont.style.height = "35%";
+                    // creatcont.style.width = "25%";
+                    // creatcont.style.marginTop = "10px";
+                    // creatcont.style.padding = "10px";
+                    creatcont.className = 'container'
+                    getwrapper.appendChild(creatcont)
 
-                let creatimg = document.createElement('img')
-                creatimg.src = imageurl;
-                creatimg.style.height = "100%";
-                creatimg.style.width = "100%";
-                creatimg.style.objectFit = "cover";
-                creatimg.style.borderRadius = "7px";
-                creatcont.appendChild(creatimg);
-                document.getElementById('Searchimages').value = "";
-        
+                    let creatimg = document.createElement('img')
+                    creatimg.src = imageurl;
+                    creatimg.style.height = "100%";
+                    creatimg.style.width = "100%";
+                    creatimg.style.objectFit = "cover";
+                    creatimg.style.borderRadius = "7px";
+                    creatcont.appendChild(creatimg);
+
+
+                    let creatimg2 = document.createElement('img')
+                    creatimg2.src = "heart.png";
+                    creatimg2.style.height = "10%";
+                    creatimg2.style.width = "10%";
+                    creatimg2.style.transform = "translate(450%,-600%)";
+                    creatimg2.style.opacity="0";
+                    creatcont.appendChild(creatimg2);
+
+
+                    creatimg.addEventListener('dblclick', function () {
+                        creatimg2.style.transform = "translate(450%,-600%)";
+                       creatimg2.style.opacity="0.9";
+                       creatimg2.style.transition="0.6s ease";
+                       setTimeout(()=>{
+                        creatimg2.style.opacity="0";
+                        creatimg2.style.transition="0.6s ease";
+                       },1000)
+                    })
+                    document.getElementById('Searchimages').value = "";
+
+                })
+
+            })
+
+
     })
-
- })
-
-
-})
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
